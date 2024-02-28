@@ -9,6 +9,7 @@ import ar.edu.unlam.pb1.dominio.Piloto;
 public class PruebaDeGestionDeCarreras {
 
 	private static final int CANTIDAD_DE_COCHES = 5;
+	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 
@@ -22,13 +23,21 @@ public class PruebaDeGestionDeCarreras {
 		 * un numero de gestión valido.
 		 */
 
+		boolean gestion = false;
+
+		do {
+			numeroDeGestion = ingresarNumeroDeGestion();
+			gestion = actual.validarNumeroDeGestion(numeroDeGestion);
+
+		} while (!gestion);
+
 		MenuPrincipal opcionMenuPrincipal = null;
 		int numeroIngresado = 0;
 		boolean pilotosIngresados = false;
 
 		// La cantidad de coches debe definirla para la prueba *generando la constante
 		// CANTIDAD_DE_COCHES
-		Coche[] posiciones = new Coche[0];
+		Coche[] posiciones = new Coche[CANTIDAD_DE_COCHES];
 
 		do {
 			mostrarMenuPrincipal();
@@ -49,7 +58,14 @@ public class PruebaDeGestionDeCarreras {
 				 * inscripción. En caso de querer ingresar mas corredores se debe mostrar un
 				 * mensaje de error.
 				 */
-
+				if (pilotosIngresados) {
+					mostrarPorPantalla("No hay mas cupo");
+				} else {
+					inscribirPilotos(posiciones);
+					actual.ordenarPosicionesPorNumerodeIdentificador(posiciones);
+					mostrarPosiciones(posiciones);
+					pilotosIngresados = true;
+				}
 				break;
 			case GENERAR_CARRERAS:
 
@@ -59,6 +75,11 @@ public class PruebaDeGestionDeCarreras {
 				 * (con el metodo mostrarPorPantalla) al *ganador para recibir el premio. Usar
 				 * el metodo otorgarPremioAlCocheGanador.
 				 */
+
+				actual.generarCarreras(posiciones);
+
+				mostrarPorPantalla(actual.otorgarPremioAlCocheGanador(posiciones));
+				break;
 
 			case DETERMINAR_ESTADISTICAS:
 				mostrarPorPantalla("\n\tAnalisis de parametros finales de cada coche despues de la carrera\n");
@@ -93,7 +114,8 @@ public class PruebaDeGestionDeCarreras {
 
 		// Complete el metodo para ingresar un numero de gestion y lo devuelva al metodo
 		// llamador.
-		return null;
+		mostrarPorPantalla("Ingrese numero de gestion");
+		return sc.next();
 	}
 
 	private static void mostrarMenuPrincipal() {
@@ -112,7 +134,7 @@ public class PruebaDeGestionDeCarreras {
 	private static int ingresarNumeroEntero() {
 		// Complete el metodo para ingresar un numero de tipo entero y lo devuelva al
 		// metodo llamador.
-		return 0;
+		return sc.nextInt();
 	}
 
 	private static MenuPrincipal obtenerOpcionDelMenuPrincipal(int numeroIngresado) {
@@ -121,13 +143,14 @@ public class PruebaDeGestionDeCarreras {
 
 	private static String ingresarDescripcion() {
 		// Complete el metodo para ingresar un texto y lo devuelva al metodo llamador.
-		return null;
+
+		return sc.next();
 	}
 
 	private static double ingresarNumeroDecimal() {
 		// Complete el metodo para ingresar un numero de tipo decimal y lo devuelva al
 		// metodo llamador.
-		return 0;
+		return sc.nextDouble();
 	}
 
 	private static Coche[] inscribirPilotos(Coche[] posiciones) {
@@ -139,7 +162,24 @@ public class PruebaDeGestionDeCarreras {
 		 */
 		mostrarPorPantalla("\t\tIngrese los datos del piloto\n'");
 
-		return null;
+		for (int i = 0; i < posiciones.length; i++) {
+
+			mostrarPorPantalla("Ingrese nombre:");
+			String nombre = ingresarDescripcion();
+			mostrarPorPantalla("Ingrese apellido:");
+			String apellido = ingresarDescripcion();
+			mostrarPorPantalla("Ingrese combustible:");
+			double combustible = ingresarNumeroDecimal();
+
+			Piloto piloto = new Piloto(nombre, apellido);
+
+			Coche coche = new Coche(combustible, piloto);
+
+			posiciones[i] = coche;
+
+		}
+
+		return posiciones;
 	}
 
 	private static void mostrarPosiciones(Coche[] posiciones) {
@@ -148,6 +188,13 @@ public class PruebaDeGestionDeCarreras {
 		 * muestra todos los datos de los coche de carrera y la ubicación en las
 		 * posiciones indicadas. Debe realizar las validaciones correspondientes.
 		 */
+
+		for (int i = 0; i < posiciones.length; i++) {
+
+			if (posiciones[i] != null) {
+				mostrarPorPantalla(posiciones.toString());
+			}
+		}
 	}
 
 	private static void parametrosFinalesDeCadaCocheDespuesDeLaCarrera(Coche[] posiciones) {
