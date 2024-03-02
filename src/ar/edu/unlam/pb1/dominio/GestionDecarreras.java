@@ -168,8 +168,8 @@ public class GestionDecarreras {
 			}
 		}
 
-		String cocheConMasKm = "Identificacion del coche " + aux.getIdentificador() + " n/"
-				+ "Cantidad de kilometros recorridos " + aux.getKilometrosRecorridos() + " n/" + "Apellido "
+		String cocheConMasKm = "Identificacion del coche:" + aux.getIdentificador() + "\n"
+				+ "Cantidad de kilometros recorridos:" + aux.getKilometrosRecorridos() + "\n" + "Apellido:"
 				+ aux.getPiloto().getApellido();
 
 		return cocheConMasKm;

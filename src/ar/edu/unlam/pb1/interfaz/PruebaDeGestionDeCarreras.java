@@ -8,7 +8,7 @@ import ar.edu.unlam.pb1.dominio.Piloto;
 
 public class PruebaDeGestionDeCarreras {
 
-	private static final int CANTIDAD_DE_COCHES = 5;
+	private static final int CANTIDAD_DE_COCHES = 3;
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -75,7 +75,6 @@ public class PruebaDeGestionDeCarreras {
 				 * (con el metodo mostrarPorPantalla) al *ganador para recibir el premio. Usar
 				 * el metodo otorgarPremioAlCocheGanador.
 				 */
-
 				actual.generarCarreras(posiciones);
 
 				mostrarPorPantalla(actual.otorgarPremioAlCocheGanador(posiciones));
@@ -83,7 +82,9 @@ public class PruebaDeGestionDeCarreras {
 
 			case DETERMINAR_ESTADISTICAS:
 				mostrarPorPantalla("\n\tAnalisis de parametros finales de cada coche despues de la carrera\n");
-
+				
+				if(posiciones[0] != null) {
+				parametrosFinalesDeCadaCocheDespuesDeLaCarrera(posiciones);
 				/*
 				 * mostra por pantalla los valores finales de cada coche después de la carrera y
 				 * todos los datos del coche con más *kilometres recorridos. Ademas debe mostrar
@@ -93,14 +94,18 @@ public class PruebaDeGestionDeCarreras {
 				 */
 
 				mostrarPorPantalla("\nCoche con mas kilometros recorridos:\n");
-
+				mostrarPorPantalla(actual.obtenerlaCantidadMaximaDeKilometrosRecorridos(posiciones));
+				actual.vaciarListaDePosiciones(posiciones);
+				pilotosIngresados = false;
+				
+				}
 				break;
 			case SALIR:
 				break;
 			// Complete la opcion de la excepcion correspondiente
 			}
 			// Completar la condicion para que funcione correctamente
-		} while (false);
+		} while (true);
 
 		// Libere todos los recursos usados para finalizar el programa
 	}
@@ -192,7 +197,7 @@ public class PruebaDeGestionDeCarreras {
 		for (int i = 0; i < posiciones.length; i++) {
 
 			if (posiciones[i] != null) {
-				mostrarPorPantalla(posiciones.toString());
+				mostrarPorPantalla(posiciones[i].toString());
 			}
 		}
 	}
@@ -202,5 +207,15 @@ public class PruebaDeGestionDeCarreras {
 		// deberá mostrar todos los datos correspondientes a cada coche de carreras
 		// después de la carrera.
 		// Debe realizar las validaciones correspondientes.
+
+		for (int i = 0; i < posiciones.length; i++) {
+			if (posiciones[i] != null) {
+				mostrarPorPantalla("Nombre:" + posiciones[i].getPiloto().getNombre());
+				mostrarPorPantalla("Apellido:" + posiciones[i].getPiloto().getApellido());
+				mostrarPorPantalla("Identificador:" + posiciones[i].getIdentificador());
+				mostrarPorPantalla("Kilometros recorridos:" + posiciones[i].getKilometrosRecorridos());
+				mostrarPorPantalla("Combustible:" + posiciones[i].getCantidadDeCombustible() + "\n");
+			}
+		}
 	}
 }

@@ -27,11 +27,11 @@ public class Coche {
 	}
 
 	public void setKilometrosRecorridos(int kilometros) {
-		this.kilometrosRecorridos = kilometros;
+		this.kilometrosRecorridos += kilometros;
 	}
 
 	public void setCantidadDeCombustible(double cantidadDeCombustible) {
-		this.combustible = cantidadDeCombustible;
+		this.combustible -= cantidadDeCombustible;
 	}
 
 	public double getCantidadDeCombustible() {
